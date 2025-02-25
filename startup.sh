@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Make sure certbot config directories exist
+mkdir -p ./certbot/conf
+mkdir -p ./certbot/www
+
+# Create necessary SSL files first
+./update-init-letsencrypt.sh
+
+# Start the containers
 docker compose up --build --detach;
 
 crontab -r;
