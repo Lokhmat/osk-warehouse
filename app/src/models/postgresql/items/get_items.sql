@@ -9,4 +9,6 @@ SELECT
 FROM
     app.items
 WHERE 
-    NOT is_deleted;
+    NOT is_deleted
+    AND (:item_name IS NULL OR item_name LIKE ('%' || :item_name || '%'))
+    AND (:item_cat IS NULL OR item_type LIKE ('%' || :item_cat || '%'));

@@ -51,7 +51,7 @@ def authorize_user(
 
 
 def authorize_user_with_token(
-    token: typing.Annotated[str, Depends(oauth2_scheme)]
+    token: typing.Annotated[str, Depends(oauth2_scheme)],
 ) -> users.InternalUser:
     try:
         payload = jwt.decode(
@@ -69,7 +69,7 @@ def authorize_user_with_token(
 
 
 def authorize_super_user_with_token(
-    token: typing.Annotated[str, Depends(oauth2_scheme)]
+    token: typing.Annotated[str, Depends(oauth2_scheme)],
 ) -> users.InternalUser:
     user = authorize_user_with_token(token=token)
     if not user.is_superuser:
@@ -78,7 +78,7 @@ def authorize_super_user_with_token(
 
 
 def authorize_admin_with_token(
-    token: typing.Annotated[str, Depends(oauth2_scheme)]
+    token: typing.Annotated[str, Depends(oauth2_scheme)],
 ) -> users.InternalUser:
     user = authorize_user_with_token(token=token)
     if not user.is_admin and not user.is_superuser:

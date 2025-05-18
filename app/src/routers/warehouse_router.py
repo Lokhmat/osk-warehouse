@@ -53,7 +53,7 @@ async def get_warehouse_by_id(
 async def get_warehouse_list(
     user: typing.Annotated[
         users.InternalUser, Depends(crypto.authorize_user_with_token)
-    ]
+    ],
 ):
     result = warehouse.get_warehouse_list(engine=db_connector.engine)
     result = [wh for wh in result if wh.id in user.warehouses or user.is_superuser]

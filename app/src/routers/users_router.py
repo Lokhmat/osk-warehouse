@@ -55,7 +55,7 @@ async def create_user(
     responses=helpers.UNATHORIZED_RESPONSE,
 )
 async def get_users(
-    _: typing.Annotated[users.InternalUser, Depends(crypto.authorize_user_with_token)]
+    _: typing.Annotated[users.InternalUser, Depends(crypto.authorize_user_with_token)],
 ):
     db_users = users.get_users(db_connector.engine)
     return users.ListApiUsers(items=converters.convert_users(db_users))

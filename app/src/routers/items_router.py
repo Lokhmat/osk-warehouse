@@ -72,9 +72,11 @@ async def delete_item(
     responses=helpers.UNATHORIZED_RESPONSE,
 )
 async def get_items_list(
-    _: typing.Annotated[users.InternalUser, Depends(crypto.authorize_user_with_token)]
+    _: typing.Annotated[users.InternalUser, Depends(crypto.authorize_user_with_token)],
+    item_name: typing.Optional[str] = None,
+    item_cat: typing.Optional[str] = None,
 ):
-    return items.get_items_list(db_connector.engine)
+    return items.get_items_list(db_connector.engine, item_name, item_cat)
 
 
 @items_router.get(

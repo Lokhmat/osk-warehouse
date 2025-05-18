@@ -120,12 +120,22 @@ def get_item_by_id(engine, item_id: str):
     return item
 
 
-def get_items_list(engine):
+def get_items_list(
+    engine,
+    item_name: typing.Optional[str],
+    item_cat: typing.Optional[str],
+):
     items: typing.List[Item] = []
     with engine.connect() as connection:
         with open(f"{BASE_POSTGRES_TRANSACTIONS_DIRECTORY}/items/get_items.sql") as sql:
             query = text(sql.read())
-            for row in connection.execute(query):
+            for row in connection.execute(
+                query,
+                {
+                    "item_name": item_name,
+                    "item_cat": item_cat,
+                },
+            ):
                 items.append(Item(**row._mapping))
         connection.commit()
     return ListItems(items=items)
